@@ -9,7 +9,8 @@ public class GameImpl extends Pane implements Game {
 	/**
 	 * Defines different states of the game.
 	 */
-	public enum GameState {
+	public enum GameState 
+	{
 		WON, LOST, ACTIVE, NEW
 	}
 
