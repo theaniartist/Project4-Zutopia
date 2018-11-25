@@ -27,6 +27,7 @@ public class GameImpl extends Pane implements Game {
 	// Instance variables
 	private Ball ball;
 	private Paddle paddle;
+	private ImageLoader imageLoader;
 
 	/**
 	 * Constructs a new GameImpl.
@@ -57,6 +58,41 @@ public class GameImpl extends Pane implements Game {
 		// Create and add paddle
 		paddle = new Paddle();
 		getChildren().add(paddle.getRectangle());  // Add the paddle to the game board
+
+		//Creates a 4x4 board of images
+		imageLoader = new ImageLoader();
+
+		getChildren().add(imageLoader.getDuck());
+
+		getChildren().add(imageLoader.getGoat());
+
+		getChildren().add(imageLoader.getHorse());
+
+		getChildren().add(imageLoader.getFirstDuck());
+
+		getChildren().add(imageLoader.getFirstGoat());
+
+		getChildren().add(imageLoader.getFirstHorse());
+
+		getChildren().add(imageLoader.getSecondDuck());
+
+		getChildren().add(imageLoader.getSecondGoat());
+
+		getChildren().add(imageLoader.getSecondHorse());
+
+		getChildren().add(imageLoader.getThirdDuck());
+
+		getChildren().add(imageLoader.getThirdGoat());
+
+		getChildren().add(imageLoader.getThirdHorse());
+
+		getChildren().add(imageLoader.getFourthDuck());
+
+		getChildren().add(imageLoader.getFourthGoat());
+
+		getChildren().add(imageLoader.getFourthHorse());
+
+		getChildren().add(imageLoader.getFirstDuckFourth());
 
 		// Add start message
 		final String message;
