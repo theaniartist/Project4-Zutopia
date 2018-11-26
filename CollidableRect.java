@@ -1,9 +1,9 @@
 
-public abstract class Collidable 
+public abstract class CollidableRect
 {
 	private double _x1, _y1, _x2, _y2;
 	
-	public Collidable(double x1, double y1, double x2, double y2)
+	public CollidableRect(double x1, double y1, double x2, double y2)
 	{
 		_x1 = x1;
 		_y1 = y1;
@@ -11,13 +11,6 @@ public abstract class Collidable
 		_y2 = y2;
 	}
 
-	public abstract boolean intersect(Collidable object);
-	
-	public double distanceTo(double x1, double y1, double x2, double y2)
-	{
-		return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-	}
-	
 	public void setX1(double x1)
 	{
 		_x1 = x1;

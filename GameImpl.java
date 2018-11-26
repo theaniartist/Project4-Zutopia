@@ -121,6 +121,14 @@ public class GameImpl extends Pane implements Game {
 		});
 
 		// Add another event handler to steer paddle...
+		setOnMouseMoved(new EventHandler<MouseEvent>()
+				{
+					@Override
+					public void handle(MouseEvent event)
+					{
+						paddle.moveTo(event.getX(), event.getY());
+					}
+				});
 	}
 
 	/**
@@ -155,6 +163,10 @@ public class GameImpl extends Pane implements Game {
 	 */
 	public GameState runOneTimestep (long deltaNanoTime) {
 		ball.updatePosition(deltaNanoTime);
+		if(ball.intersect(paddle))
+		{
+			ball.resolve_collision(paddle);
+		}
 		return GameState.ACTIVE;
 	}
 }

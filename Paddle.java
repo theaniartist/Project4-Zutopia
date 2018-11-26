@@ -2,7 +2,7 @@ import java.awt.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-class Paddle extends Collidable
+class Paddle extends CollidableRect
 {
 	// Constants
 	/**
@@ -34,7 +34,7 @@ class Paddle extends Collidable
 	 */
 	public Paddle () 
 	{
-		super(0, INITIAL_Y_LOCATION_FRAC * GameImpl.HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, INITIAL_Y_LOCATION_FRAC * GameImpl.HEIGHT + PADDLE_HEIGHT);
+		super(0, 0, 0, 0);
 		final double x = PADDLE_WIDTH / 2;
 		final double y = INITIAL_Y_LOCATION_FRAC * GameImpl.HEIGHT;
 
@@ -43,6 +43,10 @@ class Paddle extends Collidable
 		rectangle.setLayoutY(y - PADDLE_HEIGHT / 2);
 		rectangle.setStroke(Color.GREEN);
 		rectangle.setFill(Color.GREEN);
+		setX1(getX() - PADDLE_WIDTH / 2);
+		setY1(getY() - PADDLE_HEIGHT / 2);
+		setX2(getX() + PADDLE_WIDTH / 2);
+		setY2(getY() + PADDLE_HEIGHT / 2);
 	}
 	
 	/**
@@ -97,11 +101,5 @@ class Paddle extends Collidable
 		setY1(newY - PADDLE_HEIGHT / 2);
 		setX2(newX + PADDLE_WIDTH / 2);
 		setY2(newY + PADDLE_HEIGHT / 2);
-		
-	}
-	
-	public boolean intersect(Collidable object)
-	{
-		return false;
 	}
 }

@@ -6,7 +6,7 @@ import javafx.scene.shape.Circle;
 /**
  * Class that implements a ball with a position and velocity.
  */
-public class Ball extends Collidable
+public class Ball
 {
 	// Constants
 	/**
@@ -34,7 +34,6 @@ public class Ball extends Collidable
 	 */
 	public Ball () 
 	{
-		super(GameImpl.WIDTH / 2 - BALL_RADIUS, GameImpl.HEIGHT / 2 - BALL_RADIUS, GameImpl.WIDTH / 2 + BALL_RADIUS, GameImpl.HEIGHT / 2 + BALL_RADIUS);
 		x = GameImpl.WIDTH/2;
 		y = GameImpl.HEIGHT/2;
 		vx = INITIAL_VX;
@@ -48,7 +47,7 @@ public class Ball extends Collidable
 	
 	private boolean horizontalWallCollision()
 	{
-		if(getX2() >= GameImpl.WIDTH || getX1() <= 0)
+		if(x + BALL_RADIUS > GameImpl.WIDTH || x - BALL_RADIUS < 0)
 		{
 			return true;
 		}
@@ -60,7 +59,7 @@ public class Ball extends Collidable
 	
 	private boolean verticalWallCollision()
 	{
-		if(getY2() >= GameImpl.HEIGHT || getY1() <= 0)
+		if(y + BALL_RADIUS > GameImpl.HEIGHT || y - BALL_RADIUS < 0)
 		{
 			return true;
 		}
@@ -101,37 +100,42 @@ public class Ball extends Collidable
 		
 		circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
-		setX1(x - BALL_RADIUS);
-		setY1(y - BALL_RADIUS);
-		setX2(x + BALL_RADIUS);
-		setY2(y + BALL_RADIUS);
 	}
 	
-	@Override
-	public boolean intersect(Collidable other)
+	public double getX()
 	{
-		double closestX = x;
-		double closestY = y;
+		return x;
+	}
+	
+	public double getY()
+	{
+		return y;
+	}
+	
+	public boolean intersect(CollidableRect other)
+	{
+		double closestX = getX();
+		double closestY = getY();
 		
-		if(x < other.getX1())
+		if(getX() < other.getX1())
 		{
 			closestX = other.getX1();
 		}
-		if(x > other.getX2())
+		if(getX() > other.getX2())
 		{
 			closestX = other.getX2();
 		}
 		
-		if(y < other.getY1())
+		if(getY() < other.getY1())
 		{
 			closestY = other.getY1();
 		}
-		if(y > other.getY2())
+		if(getY() > other.getY2())
 		{
 			closestY = other.getY2();
 		}
 		
-		double distanceTo = distanceTo(closestX, x, closestY, y);
+		double distanceTo = Utility.distanceTo(closestX, closestY, x, y);
 		
 		if(distanceTo < BALL_RADIUS)
 		{
@@ -140,6 +144,29 @@ public class Ball extends Collidable
 		else
 		{
 			return false;
+		}
+	}
+	
+	public void resolve_collision(CollidableRect otherBoundingBox)
+	{
+		double cornerCone = BALL_RADIUS / 2;
+		boolean extremeUpperRight = getX() - cornerCone > otherBoundingBox.getX2() && getY() + cornerCone < otherBoundingBox.getY1();
+		boolean extremeLowerRight = getX() - cornerCone > otherBoundingBox.getX2() && getY() - cornerCone > otherBoundingBox.getY2();
+		boolean extremeUpperLeft = getX() + cornerCone < otherBoundingBox.getX1() && getY() + cornerCone < otherBoundingBox.getY1();
+		boolean extremeLowerLeft = getX() + cornerCone < otherBoundingBox.getX1() && getY() - cornerCone > otherBoundingBox.getY2();
+		
+		if(extremeUpperRight || extremeLowerRight || extremeUpperLeft || extremeLowerLeft)
+		{
+			vx = -vx;
+			vy = -vy;
+		}
+		else if(getY() > otherBoundingBox.getY1() && getY() < otherBoundingBox.getY2())
+		{
+			vx = -vx;
+		}
+		else
+		{
+			vy = -vy;
 		}
 	}
 }
