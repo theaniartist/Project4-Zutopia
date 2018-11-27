@@ -1,4 +1,7 @@
-
+/**
+ * A class that calculates the distance between two points.
+ *
+ */
 public class Utility 
 {
 	public static double distanceTo(double x1, double y1, double x2, double y2)

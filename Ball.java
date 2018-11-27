@@ -44,7 +44,14 @@ public class Ball
 		circle.setLayoutY(y - BALL_RADIUS);
 		circle.setFill(Color.BLACK);
 	}
-	
+
+	/**
+	 * Checks if the ball has collided with the left/right wall of the screen. Collision
+	 * occurs when the x-coordinate plus the ball's radius is over the screen's width
+	 * or if the width of the screen minus the ball's radius is less than 0.
+	 * @return true if the ball has collided with left or right of the screen.
+	 */
+
 	private boolean horizontalWallCollision()
 	{
 		if(x + BALL_RADIUS > GameImpl.WIDTH || x - BALL_RADIUS < 0)
@@ -56,6 +63,13 @@ public class Ball
 			return false;
 		}
 	}
+
+	/**
+	 * Checks if the ball has collided with the top/bottom wall of the screen. Collision
+	 * occurs when the y-coordinate plus the ball's radius is over the screen's height
+	 * or if the height of the screen mins the ball's radius is less than 0.
+	 * @return true if the ball has collided with the top or bottom of the screen.
+	 */
 	
 	private boolean verticalWallCollision()
 	{
@@ -101,17 +115,36 @@ public class Ball
 		circle.setTranslateX(x - (circle.getLayoutX() + BALL_RADIUS));
 		circle.setTranslateY(y - (circle.getLayoutY() + BALL_RADIUS));
 	}
-	
+
+	/**
+	 * Gets the X coordinate of the ball
+	 * @return X coordinate of the ball
+	 */
+
 	public double getX()
 	{
 		return x;
 	}
+
+	/**
+	 * Gets the Y coordinate of the ball
+	 * @return Y coordinate of the ball
+	 */
 	
 	public double getY()
 	{
 		return y;
 	}
-	
+
+
+	/**
+	 * Method checks if the ball has "intersected" with an object (paddle or images) on
+	 * the board.
+	 * @param other the object that would be intersecting with the ball (paddle
+	 * and images)
+	 * @return true if the distance is less than the ball's radius
+	 */
+
 	public boolean intersect(CollidableRect other)
 	{
 		double closestX = getX();
@@ -146,6 +179,13 @@ public class Ball
 			return false;
 		}
 	}
+
+	/**
+	 * Method causes the ball to "bounce back" (velocity of both x and y become negative) if it hits
+	 * one of the four corners of the screen. Also bounces back when it has collided with an object on
+	 * the board (paddle or images)
+	 * @param otherBoundingBox the object's bounding box
+	 */
 	
 	public void resolve_collision(CollidableRect otherBoundingBox)
 	{
@@ -168,5 +208,21 @@ public class Ball
 		{
 			vy = -vy;
 		}
+	}
+
+	/**
+	 * Method increases the ball's x-velocity and y-velocity when it hits one of the
+	 * images on the board.
+	 */
+
+	public void accelerateBall() {
+
+		//if the ball has hit an image
+		//increase the velocity of the ball and remove the specified image
+		//vx and vy increase by 2
+		//remove image by:
+		//ImageView image = new ImageView();
+		//image.setImage(null);
+
 	}
 }
