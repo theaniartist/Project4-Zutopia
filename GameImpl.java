@@ -33,6 +33,7 @@ public class GameImpl extends Pane implements Game {
 	private Animal[] animals = new Animal[16];
 
 	private int ballBounceCount = 0;
+	private int animalsRemaining = animals.length;
 
 	/**
 	 * Constructs a new GameImpl.
@@ -40,7 +41,7 @@ public class GameImpl extends Pane implements Game {
 	public GameImpl () {
 		setStyle("-fx-background-color: white;");
 
-		restartGame(GameState.NEW);
+		restartGame(GameState.ACTIVE);
 	}
 
 	public String getName () {
@@ -113,7 +114,7 @@ public class GameImpl extends Pane implements Game {
 		getChildren().add(startLabel);
 
 		// Add event handler to start the game
-		setOnMouseClicked(new EventHandler<MouseEvent> () {
+		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle (MouseEvent e) {
 				GameImpl.this.setOnMouseClicked(null);
@@ -181,13 +182,21 @@ public class GameImpl extends Pane implements Game {
 					ball.resolve_collision(animals[i]);
 					getChildren().remove(animals[i].getSprite());
 					animals[i] = null;
+					animalsRemaining--;
+					
+					if(animalsRemaining == 0)
+					{
+						animalsRemaining = animals.length;
+						return GameState.WON;
+					}
 				}
 			}
 		}
 
-		if (ball.getY() + Ball.BALL_RADIUS >= HEIGHT); {
+		if (ball.getY() + Ball.BALL_RADIUS > HEIGHT) {
 			ballBounceCount++;
 			if (ballBounceCount == 5) {
+				animalsRemaining = animals.length;
 				return GameState.LOST;
 			}
 		}
