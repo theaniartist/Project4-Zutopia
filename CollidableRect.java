@@ -1,6 +1,5 @@
 /**
- * An abstract class that sets and returns respective x and y coordinates of whichever class that
- * it is being extended off of.
+ * An abstract class that sets and returns respective x and y coordinates.
  */
 public abstract class CollidableRect
 {

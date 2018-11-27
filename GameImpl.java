@@ -24,6 +24,10 @@ public class GameImpl extends Pane implements Game {
 	 * The height of the game board.
 	 */
 	public static final int HEIGHT = 600;
+
+	/**
+	 * The height of where the images start
+	 */
 	
 	public static final int NEW_HEIGHT = HEIGHT / 2;
 
@@ -52,14 +56,17 @@ public class GameImpl extends Pane implements Game {
 		return this;
 	}
 
+	/**
+	 * Clears the board with whatever given state that has been passed in.
+	 * @param state the state of the game currently
+	 */
+
 	private void restartGame (GameState state) {
 		getChildren().clear();  // remove all components from the game
 
 		// Create and add ball
 		ball = new Ball();
 		getChildren().add(ball.getCircle());  // Add the ball to the game board
-
-		// Create and add animals ...
 
 		// Create and add paddle
 		paddle = new Paddle();
