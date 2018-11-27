@@ -1,5 +1,5 @@
 /**
- * A class that calculates the distance between two points.
+ * A class that calculates the distance between two given points.
  *
  */
 public class Utility 

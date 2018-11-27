@@ -47,7 +47,7 @@ public class Ball
 
 	/**
 	 * Checks if the ball has collided with the left/right wall of the screen. Collision
-	 * occurs when the x-coordinate plus the ball's radius is over the screen's width
+	 * occurs when the x-coordinate plus the ball's radius is greater than the screen's width
 	 * or if the width of the screen minus the ball's radius is less than 0.
 	 * @return true if the ball has collided with left or right of the screen.
 	 */
@@ -66,8 +66,8 @@ public class Ball
 
 	/**
 	 * Checks if the ball has collided with the top/bottom wall of the screen. Collision
-	 * occurs when the y-coordinate plus the ball's radius is over the screen's height
-	 * or if the height of the screen mins the ball's radius is less than 0.
+	 * occurs when the y-coordinate plus the ball's radius is greater than the screen's height
+	 * or if the height of the screen minus the ball's radius is less than 0.
 	 * @return true if the ball has collided with the top or bottom of the screen.
 	 */
 	
@@ -117,8 +117,8 @@ public class Ball
 	}
 
 	/**
-	 * Gets the X coordinate of the ball
-	 * @return X coordinate of the ball
+	 * Gets the X coordinate of the ball.
+	 * @return X coordinate of the ball.
 	 */
 
 	public double getX()
@@ -127,8 +127,8 @@ public class Ball
 	}
 
 	/**
-	 * Gets the Y coordinate of the ball
-	 * @return Y coordinate of the ball
+	 * Gets the Y coordinate of the ball.
+	 * @return Y coordinate of the ball.
 	 */
 	
 	public double getY()
@@ -138,11 +138,11 @@ public class Ball
 
 
 	/**
-	 * Method checks if the ball has "intersected" with an object (paddle or images) on
-	 * the board.
-	 * @param other the object that would be intersecting with the ball (paddle
-	 * and images)
-	 * @return true if the distance is less than the ball's radius
+	 * Method checks if the ball has "intersected" with an object (paddle, images, walls, etc) on
+	 * the board. Compares the ball's x and y values to the object's x and y values that it is going
+	 * to collide with and calculates the distance of it.
+	 * @param other the object that would be intersecting with the ball (paddle, images, walls, etc).
+	 * @return true if the distance is less than the ball's radius.
 	 */
 
 	public boolean intersect(CollidableRect other)
@@ -181,10 +181,11 @@ public class Ball
 	}
 
 	/**
-	 * Method causes the ball to "bounce back" (velocity of both x and y become negative) if it hits
+	 * Method causes the ball to "bounce back" (velocity of both x and y becomes negative) if it hits
 	 * one of the four corners of the screen. Also bounces back when it has collided with an object on
-	 * the board (paddle or images)
-	 * @param otherBoundingBox the object's bounding box
+	 * the board (paddle, images, walls , etc). Increases the ball's velocity (both x and y)
+	 * if it has hit one of the animal images on the board.
+	 * @param other the object's bounding box
 	 */
 	
 	public void resolve_collision(CollidableRect other)
@@ -213,21 +214,5 @@ public class Ball
 		{
 			vy = -vy;
 		}
-	}
-
-	/**
-	 * Method increases the ball's x-velocity and y-velocity when it hits one of the
-	 * images on the board.
-	 */
-
-	public void accelerateBall() {
-
-		//if the ball has hit an image
-		//increase the velocity of the ball and remove the specified image
-		//vx and vy increase by 2
-		//remove image by:
-		//ImageView image = new ImageView();
-		//image.setImage(null);
-
 	}
 }

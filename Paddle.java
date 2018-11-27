@@ -2,6 +2,10 @@ import java.awt.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Class that implements a paddle with a given position and responds to the movement of the mouse.
+ */
+
 class Paddle extends CollidableRect
 {
 	// Constants
