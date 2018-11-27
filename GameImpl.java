@@ -32,6 +32,8 @@ public class GameImpl extends Pane implements Game {
 	private Paddle paddle;
 	private Animal[] animals = new Animal[16];
 
+	private int ballBounceCount = 0;
+
 	/**
 	 * Constructs a new GameImpl.
 	 */
@@ -182,6 +184,14 @@ public class GameImpl extends Pane implements Game {
 				}
 			}
 		}
+
+		if (ball.getY() + Ball.BALL_RADIUS >= HEIGHT); {
+			ballBounceCount++;
+			if (ballBounceCount == 5) {
+				return GameState.LOST;
+			}
+		}
+
 		return GameState.ACTIVE;
 	}
 }
