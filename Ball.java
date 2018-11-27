@@ -100,10 +100,26 @@ public class Ball
 	{
 		if(horizontalWallCollision())
 		{
+			if(vx > 0)
+			{
+				x -= 2;
+			}
+			else
+			{
+				x += 2;
+			}
 			vx = -vx;
 		}
 		if(verticalWallCollision())
 		{
+			if(vy > 0)
+			{
+				y -= 2;
+			}
+			else
+			{
+				y += 2;
+			}
 			vy = -vy;
 		}
 		
@@ -197,8 +213,8 @@ public class Ball
 		
 		if(other instanceof Animal)
 		{
-			vx = vx * 1.2;
-			vy = vy * 1.2;
+			vx = vx * 1.15;
+			vy = vy * 1.15;
 		}
 		if(extremeUpperRight || extremeLowerRight || extremeUpperLeft || extremeLowerLeft)
 		{
