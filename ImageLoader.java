@@ -42,9 +42,9 @@ public class ImageLoader {
 	
 	public ImageLoader () {
 		
-		duckImage = new Image ("file:///C:/Users/aniartist/Documents/Zutopia/Project4/duck.jpg");
-		goatImage = new Image("file:///C:/Users/aniartist/Documents/Zutopia/Project4/goat.jpg");
-		horseImage = new Image("file:///C:/Users/aniartist/Documents/Zutopia/Project4/horse.jpg");
+		duckImage = new Image ("duck.jpg");
+		goatImage = new Image("goat.jpg");
+		horseImage = new Image("horse.jpg");
 		
 		duckIV = new ImageView();
 		duckIV.setImage(duckImage);
@@ -116,8 +116,8 @@ public class ImageLoader {
 				//SECOND ROW
 				
 				//first goat image, second row
-				_goatIV.setLayoutX(GameImpl.WIDTH/4 - 50);
-				_goatIV.setLayoutY(NEW_HEIGHT/3);
+				goatIV.setLayoutX(GameImpl.WIDTH/4 - 50);
+				goatIV.setLayoutY(NEW_HEIGHT/3);
 				
 				//second horse image, second row 
 				_horseIV2.setLayoutX((GameImpl.WIDTH/4) + 35);

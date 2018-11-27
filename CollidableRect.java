@@ -2,14 +2,6 @@
 public abstract class CollidableRect
 {
 	private double _x1, _y1, _x2, _y2;
-	
-	public CollidableRect(double x1, double y1, double x2, double y2)
-	{
-		_x1 = x1;
-		_y1 = y1;
-		_x2 = x2;
-		_y2 = y2;
-	}
 
 	public void setX1(double x1)
 	{

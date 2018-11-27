@@ -1,5 +1,6 @@
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.MouseEvent;
 import javafx.event.*;
@@ -23,11 +24,13 @@ public class GameImpl extends Pane implements Game {
 	 * The height of the game board.
 	 */
 	public static final int HEIGHT = 600;
+	
+	public static final int NEW_HEIGHT = HEIGHT / 2;
 
 	// Instance variables
 	private Ball ball;
 	private Paddle paddle;
-	private ImageLoader imageLoader;
+	private Animal[] animals = new Animal[16];
 
 	/**
 	 * Constructs a new GameImpl.
@@ -58,41 +61,40 @@ public class GameImpl extends Pane implements Game {
 		// Create and add paddle
 		paddle = new Paddle();
 		getChildren().add(paddle.getRectangle());  // Add the paddle to the game board
-
+		
 		//Creates a 4x4 board of images
-		imageLoader = new ImageLoader();
+		Image duck = new Image("duck.jpg");
+		Image goat = new Image("goat.jpg");
+		Image horse = new Image("horse.jpg");
+		
+		//FIRST ROW
+		animals[0] = new Animal(duck, WIDTH/4 - 50, NEW_HEIGHT/12);
+		animals[1] = new Animal(goat, WIDTH/4 + 35, NEW_HEIGHT/12);
+		animals[2] = new Animal(horse, WIDTH/2 + 25, NEW_HEIGHT/12);
+		animals[3] = new Animal(duck, (WIDTH/4)*3 + 25, NEW_HEIGHT/12);
+		
+		//SECOND ROW
+		animals[4] = new Animal(goat, WIDTH/4 - 50, NEW_HEIGHT/3);
+		animals[5] = new Animal(horse, WIDTH/4 + 35, NEW_HEIGHT/3);
+		animals[6] = new Animal(duck, WIDTH/2 + 25, NEW_HEIGHT/3);
+		animals[7] = new Animal(goat, (WIDTH/4)*3 + 25, NEW_HEIGHT/3);
+		
+		//THIRD ROW.
+		animals[8] = new Animal(horse, WIDTH/4 - 50, NEW_HEIGHT/3 + 75);
+		animals[9] = new Animal(duck, WIDTH/4 + 35, NEW_HEIGHT/3 + 75);
+		animals[10] = new Animal(goat, WIDTH/2 + 25, NEW_HEIGHT/3 + 75);
+		animals[11] = new Animal(horse, (WIDTH/4)*3 + 25, NEW_HEIGHT/3 + 75);
+		
+		//FOURTH ROW.
+		animals[12] = new Animal(duck, WIDTH/4 - 50, NEW_HEIGHT/2 + 100);
+		animals[13] = new Animal(goat, WIDTH/4 + 35, NEW_HEIGHT/2 + 100);
+		animals[14] = new Animal(horse, WIDTH/2 + 25, NEW_HEIGHT/2 + 100);
+		animals[15] = new Animal(duck, (WIDTH/4)*3 + 25, NEW_HEIGHT/2 + 100);
 
-		getChildren().add(imageLoader.getDuck());
-
-		getChildren().add(imageLoader.getGoat());
-
-		getChildren().add(imageLoader.getHorse());
-
-		getChildren().add(imageLoader.getFirstDuck());
-
-		getChildren().add(imageLoader.getFirstGoat());
-
-		getChildren().add(imageLoader.getFirstHorse());
-
-		getChildren().add(imageLoader.getSecondDuck());
-
-		getChildren().add(imageLoader.getSecondGoat());
-
-		getChildren().add(imageLoader.getSecondHorse());
-
-		getChildren().add(imageLoader.getThirdDuck());
-
-		getChildren().add(imageLoader.getThirdGoat());
-
-		getChildren().add(imageLoader.getThirdHorse());
-
-		getChildren().add(imageLoader.getFourthDuck());
-
-		getChildren().add(imageLoader.getFourthGoat());
-
-		getChildren().add(imageLoader.getFourthHorse());
-
-		getChildren().add(imageLoader.getFirstDuckFourth());
+		for(int i = 0; i < animals.length; i++)
+		{
+			getChildren().add(animals[i].getSprite());
+		}
 
 		// Add start message
 		final String message;
@@ -166,6 +168,19 @@ public class GameImpl extends Pane implements Game {
 		if(ball.intersect(paddle))
 		{
 			ball.resolve_collision(paddle);
+		}
+		
+		for(int i = 0; i < animals.length; i++)
+		{
+			if(animals[i] != null)
+			{
+				if(ball.intersect(animals[i]))
+				{
+					ball.resolve_collision(animals[i]);
+					getChildren().remove(animals[i].getSprite());
+					animals[i] = null;
+				}
+			}
 		}
 		return GameState.ACTIVE;
 	}

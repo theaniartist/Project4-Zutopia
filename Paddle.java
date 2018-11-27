@@ -34,7 +34,6 @@ class Paddle extends CollidableRect
 	 */
 	public Paddle () 
 	{
-		super(0, 0, 0, 0);
 		final double x = PADDLE_WIDTH / 2;
 		final double y = INITIAL_Y_LOCATION_FRAC * GameImpl.HEIGHT;
 

@@ -147,20 +147,25 @@ public class Ball
 		}
 	}
 	
-	public void resolve_collision(CollidableRect otherBoundingBox)
+	public void resolve_collision(CollidableRect other)
 	{
 		double cornerCone = BALL_RADIUS / 2;
-		boolean extremeUpperRight = getX() - cornerCone > otherBoundingBox.getX2() && getY() + cornerCone < otherBoundingBox.getY1();
-		boolean extremeLowerRight = getX() - cornerCone > otherBoundingBox.getX2() && getY() - cornerCone > otherBoundingBox.getY2();
-		boolean extremeUpperLeft = getX() + cornerCone < otherBoundingBox.getX1() && getY() + cornerCone < otherBoundingBox.getY1();
-		boolean extremeLowerLeft = getX() + cornerCone < otherBoundingBox.getX1() && getY() - cornerCone > otherBoundingBox.getY2();
+		boolean extremeUpperRight = getX() - cornerCone > other.getX2() && getY() + cornerCone < other.getY1();
+		boolean extremeLowerRight = getX() - cornerCone > other.getX2() && getY() - cornerCone > other.getY2();
+		boolean extremeUpperLeft = getX() + cornerCone < other.getX1() && getY() + cornerCone < other.getY1();
+		boolean extremeLowerLeft = getX() + cornerCone < other.getX1() && getY() - cornerCone > other.getY2();
 		
+		if(other instanceof Animal)
+		{
+			vx = vx * 1.2;
+			vy = vy * 1.2;
+		}
 		if(extremeUpperRight || extremeLowerRight || extremeUpperLeft || extremeLowerLeft)
 		{
 			vx = -vx;
 			vy = -vy;
 		}
-		else if(getY() > otherBoundingBox.getY1() && getY() < otherBoundingBox.getY2())
+		else if(getY() > other.getY1() && getY() < other.getY2())
 		{
 			vx = -vx;
 		}
