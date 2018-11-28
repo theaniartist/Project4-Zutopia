@@ -8,7 +8,11 @@ import javafx.scene.shape.Rectangle;
 
 class Paddle extends CollidableRect
 {
-	// Constants
+	/*
+	 *****************************************************************************************************************************************************
+	 ***** CONSTANTS  ************************************************************************************************************************************
+	 *****************************************************************************************************************************************************
+	 */
 	/**
 	 * The width of the paddle.
 	 */
@@ -30,9 +34,12 @@ class Paddle extends CollidableRect
 	 */
 	public static final double MAX_Y_LOCATION_FRAC = 0.9;
 
-	// Instance variables
+	/*
+	 *****************************************************************************************************************************************************
+	 ***** INSTANCE VARIABLES / CONSTRUCTOR **************************************************************************************************************
+	 *****************************************************************************************************************************************************
+	 */
 	private Rectangle rectangle;
-
 	/**
 	 * Constructs a new Paddle whose vertical center is at INITIAL_Y_LOCATION_FRAC * GameImpl.HEIGHT.
 	 */
@@ -51,7 +58,11 @@ class Paddle extends CollidableRect
 		setX2(getX() + PADDLE_WIDTH / 2);
 		setY2(getY() + PADDLE_HEIGHT / 2);
 	}
-	
+	/*
+	 *****************************************************************************************************************************************************
+	 ***** PUBLIC METHODS ********************************************************************************************************************************
+	 *****************************************************************************************************************************************************
+	 */
 	/**
 	 * @return the x coordinate of the center of the paddle.
 	 */
@@ -59,7 +70,6 @@ class Paddle extends CollidableRect
 	{
 		return rectangle.getLayoutX() + rectangle.getTranslateX() + PADDLE_WIDTH / 2;
 	}
-
 	/**
 	 * @return the y coordinate of the center of the paddle.
 	 */
@@ -75,7 +85,6 @@ class Paddle extends CollidableRect
 	{
 		return rectangle;
 	}
-
 	/**
 	 * Moves the paddle so that its center is at (newX, newY), subject to
 	 * the horizontal constraint that the paddle must always be completely visible

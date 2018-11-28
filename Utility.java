@@ -1,6 +1,6 @@
 /**
  * A class that calculates the distance between two given points.
- *
+ * @return The distance between two points.
  */
 public class Utility 
 {

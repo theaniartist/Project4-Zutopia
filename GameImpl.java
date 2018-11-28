@@ -1,4 +1,7 @@
 import javafx.scene.layout.*;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.animation.AnimationTimer;
@@ -7,6 +10,11 @@ import javafx.event.*;
 import java.util.*;
 
 public class GameImpl extends Pane implements Game {
+	/*
+	 *****************************************************************************************************************************************************
+	 ***** ENUMERATIONS **********************************************************************************************************************************
+	 *****************************************************************************************************************************************************
+	 */
 	/**
 	 * Defines different states of the game.
 	 */
@@ -14,8 +22,11 @@ public class GameImpl extends Pane implements Game {
 	{
 		WON, LOST, ACTIVE, NEW
 	}
-
-	// Constants
+	/*
+	 *****************************************************************************************************************************************************
+	 ***** CONSTANTS *************************************************************************************************************************************
+	 *****************************************************************************************************************************************************
+	 */
 	/**
 	 * The width of the game board.
 	 */
@@ -28,17 +39,18 @@ public class GameImpl extends Pane implements Game {
 	/**
 	 * The height of where the images start
 	 */
-	
 	public static final int NEW_HEIGHT = HEIGHT / 2;
-
-	// Instance variables
+	/*
+	 *****************************************************************************************************************************************************
+	 ***** INSTANCE VARIABLES / CONSTRUCTOR **************************************************************************************************************
+	 *****************************************************************************************************************************************************
+	 */
 	private Ball ball;
 	private Paddle paddle;
 	private Animal[] animals = new Animal[16];
-
+	private AudioClip backgroundMusic = null;
 	private int ballBounceCount = 0;
 	private int animalsRemaining = animals.length;
-
 	/**
 	 * Constructs a new GameImpl.
 	 */
@@ -47,20 +59,27 @@ public class GameImpl extends Pane implements Game {
 
 		restartGame(GameState.ACTIVE);
 	}
-
+	/*
+	 *****************************************************************************************************************************************************
+	 ***** PUBLIC METHODS ********************************************************************************************************************************
+	 *****************************************************************************************************************************************************
+	 */
+	/**
+	 * @return Returns the name of the game.
+	 */
 	public String getName () {
 		return "Zutopia";
 	}
-
+	/**
+	 * @return Returns the object calling this method.
+	 */
 	public Pane getPane () {
 		return this;
 	}
-
 	/**
 	 * Clears the board with whatever given state that has been passed in.
 	 * @param state the state of the game currently
 	 */
-
 	private void restartGame (GameState state) {
 		getChildren().clear();  // remove all components from the game
 
@@ -77,35 +96,46 @@ public class GameImpl extends Pane implements Game {
 		Image goat = new Image("goat.jpg");
 		Image horse = new Image("horse.jpg");
 		
+		String duckSound = "quack.wav";
+		String horseSound = "whinny.wav";
+		String goatSound = "bleat.wav";
+		
 		//FIRST ROW
-		animals[0] = new Animal(duck, WIDTH/4 - 50, NEW_HEIGHT/12);
-		animals[1] = new Animal(goat, WIDTH/4 + 35, NEW_HEIGHT/12);
-		animals[2] = new Animal(horse, WIDTH/2 + 25, NEW_HEIGHT/12);
-		animals[3] = new Animal(duck, (WIDTH/4)*3 + 25, NEW_HEIGHT/12);
+		animals[0] = new Animal(duck, duckSound, WIDTH/4 - 50, NEW_HEIGHT/12);
+		animals[1] = new Animal(goat, goatSound, WIDTH/4 + 35, NEW_HEIGHT/12);
+		animals[2] = new Animal(horse, horseSound,  WIDTH/2 + 25, NEW_HEIGHT/12);
+		animals[3] = new Animal(duck, duckSound, (WIDTH/4)*3 + 25, NEW_HEIGHT/12);
 		
 		//SECOND ROW
-		animals[4] = new Animal(goat, WIDTH/4 - 50, NEW_HEIGHT/3);
-		animals[5] = new Animal(horse, WIDTH/4 + 35, NEW_HEIGHT/3);
-		animals[6] = new Animal(duck, WIDTH/2 + 25, NEW_HEIGHT/3);
-		animals[7] = new Animal(goat, (WIDTH/4)*3 + 25, NEW_HEIGHT/3);
+		animals[4] = new Animal(goat, goatSound, WIDTH/4 - 50, NEW_HEIGHT/3);
+		animals[5] = new Animal(horse, horseSound, WIDTH/4 + 35, NEW_HEIGHT/3);
+		animals[6] = new Animal(duck, duckSound, WIDTH/2 + 25, NEW_HEIGHT/3);
+		animals[7] = new Animal(goat, goatSound, (WIDTH/4)*3 + 25, NEW_HEIGHT/3);
 		
 		//THIRD ROW.
-		animals[8] = new Animal(horse, WIDTH/4 - 50, NEW_HEIGHT/3 + 75);
-		animals[9] = new Animal(duck, WIDTH/4 + 35, NEW_HEIGHT/3 + 75);
-		animals[10] = new Animal(goat, WIDTH/2 + 25, NEW_HEIGHT/3 + 75);
-		animals[11] = new Animal(horse, (WIDTH/4)*3 + 25, NEW_HEIGHT/3 + 75);
+		animals[8] = new Animal(horse, horseSound, WIDTH/4 - 50, NEW_HEIGHT/3 + 75);
+		animals[9] = new Animal(duck, duckSound, WIDTH/4 + 35, NEW_HEIGHT/3 + 75);
+		animals[10] = new Animal(goat, goatSound, WIDTH/2 + 25, NEW_HEIGHT/3 + 75);
+		animals[11] = new Animal(horse, horseSound, (WIDTH/4)*3 + 25, NEW_HEIGHT/3 + 75);
 		
 		//FOURTH ROW.
-		animals[12] = new Animal(duck, WIDTH/4 - 50, NEW_HEIGHT/2 + 100);
-		animals[13] = new Animal(goat, WIDTH/4 + 35, NEW_HEIGHT/2 + 100);
-		animals[14] = new Animal(horse, WIDTH/2 + 25, NEW_HEIGHT/2 + 100);
-		animals[15] = new Animal(duck, (WIDTH/4)*3 + 25, NEW_HEIGHT/2 + 100);
+		animals[12] = new Animal(duck, duckSound, WIDTH/4 - 50, NEW_HEIGHT/2 + 100);
+		animals[13] = new Animal(goat, goatSound, WIDTH/4 + 35, NEW_HEIGHT/2 + 100);
+		animals[14] = new Animal(horse, horseSound, WIDTH/2 + 25, NEW_HEIGHT/2 + 100);
+		animals[15] = new Animal(duck, duckSound, (WIDTH/4)*3 + 25, NEW_HEIGHT/2 + 100);
 
 		for(int i = 0; i < animals.length; i++)
 		{
 			getChildren().add(animals[i].getSprite());
 		}
-
+		
+		if(backgroundMusic != null)
+		{
+			backgroundMusic.stop();
+		}
+		backgroundMusic = new AudioClip(getClass().getClassLoader().getResource("Old MacDonald Had a Farm.wav").toString());
+		backgroundMusic.play();
+		
 		// Add start message
 		final String message;
 		if (state == GameState.LOST) {
@@ -142,7 +172,6 @@ public class GameImpl extends Pane implements Game {
 					}
 				});
 	}
-
 	/**
 	 * Begins the game-play by creating and starting an AnimationTimer.
 	 */
@@ -166,7 +195,6 @@ public class GameImpl extends Pane implements Game {
 			}
 		}.start();
 	}
-
 	/**
 	 * Updates the state of the game at each timestep. In particular, this method should
 	 * move the ball, check if the ball collided with any of the animals, walls, or the paddle, etc.
@@ -194,6 +222,7 @@ public class GameImpl extends Pane implements Game {
 					if(animalsRemaining == 0)
 					{
 						animalsRemaining = animals.length;
+						ballBounceCount = 0;
 						return GameState.WON;
 					}
 				}
@@ -203,6 +232,7 @@ public class GameImpl extends Pane implements Game {
 		if (ball.getY() + Ball.BALL_RADIUS > HEIGHT) {
 			ballBounceCount++;
 			if (ballBounceCount == 5) {
+				ballBounceCount = 0;
 				animalsRemaining = animals.length;
 				return GameState.LOST;
 			}
